@@ -1,6 +1,7 @@
 import re, json
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import inspect
 
 def extract_and_parse_json(text: str) -> dict:
     # 尝试匹配 ```json ... ``` 或 ``` ... ``` 内部的内容
@@ -41,3 +42,12 @@ def get_now_time():
     # 2. 精确到秒（去掉微秒）
     now_sec = now.replace(microsecond=0)
     return now_sec
+
+def generate_tool_desc(func) -> tuple[str, str, str]:
+    """自动从函数提取名字、签名和注释，拼装成描述"""
+    name = func.__name__
+    doc = inspect.getdoc(func)
+    sig = inspect.signature(func)
+    return [name, f"{name}\nSignature: {name}{sig}\nDescription:\n{doc}\n", sig]
+
+

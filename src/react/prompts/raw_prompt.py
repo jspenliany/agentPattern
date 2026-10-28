@@ -1,3 +1,7 @@
+from src.react.tools.order_query import tools
+from src.util.util_json import generate_tool_desc
+from collections.abc import Sequence, Callable
+
 
 def format_tool_call(tool_list: list) -> tuple[str, str]:
     tool_names: list = []
@@ -30,6 +34,14 @@ def format_tool_call(tool_list: list) -> tuple[str, str]:
 
     return "".join(tool_names), tools_descriptions
 
+def tool_description_automation(tool_obj: Sequence[Callable]) -> tuple[str, list]:
+    tool_names: list = []
+    tools_descriptions: str = ""
+    for tool in tool_obj:
+        tmp_tool_name, tmp_tool_description, tmp_tool_sig = generate_tool_desc(tool)
+        tool_names.append(tmp_tool_name)
+        tools_descriptions = tools_descriptions + tmp_tool_description
+    return tools_descriptions, tool_names
 
 def get_agent_prompt(tool_list: list) -> str:
 

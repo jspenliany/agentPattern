@@ -280,6 +280,7 @@ def apply_refund(order_id, amount, reason):
         }
     }
 
+tools = [get_user_orders, get_logistics_status, check_refund_policy, apply_refund]
 
 # ---------- 测试调用 ----------
 if __name__ == "__main__":
